@@ -4,5 +4,5 @@ A professional multimedia application featuring automated Image-to-Video generat
 
 ## 🚀 Features
 - **Image-to-Video**: [Not yet decided]
-- **TTS Engine**: [Voicebox]
+- **TTS Engine**: [Irodori-TTS]
 - **Auto-Editor**: [Not yet decided]
