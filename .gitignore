@@ -1,0 +1,29 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Environments & Virtualization ---
+.venv/
+venv/
+env/
+.env
+.python-version
+
+# --- IDE/Editor Settings ---
+.vscode/
+.idea/
+.DS_Store
+
+# --- Project Specific Data ---
+# Exclude large media files and local databases
+*.sqlite3
+*.db
+/media/
+/outputs/
+/logs/
+
+# --- Build/Packaging ---
+dist/
+build/
+*.egg-info/
