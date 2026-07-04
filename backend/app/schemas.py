@@ -11,3 +11,8 @@ class TTSRequest(BaseModel):
     text: str = Field(..., min_length=1, max_length=1000)
     voice: str = "default"
     speed: float = Field(1.0, ge=0.5, le=2.0)
+
+class VideoRequest(BaseModel):
+    video_paths: list[str]
+    audio_path: str
+    output_path: str

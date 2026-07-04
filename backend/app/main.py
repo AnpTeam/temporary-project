@@ -1,3 +1,5 @@
+from backend.app.schemas import VideoRequest
+from backend.worker.processors.editor import process_video_compilation
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from backend.app.schemas import TTSRequest
@@ -29,4 +31,18 @@ async def synthesize(request: TTSRequest):
         path=file_path, 
         media_type="audio/wav", 
         filename="speech.wav"
+    )
+
+
+@app.post("/compile-video")
+async def compile_video(request: VideoRequest):
+    """
+    Endpoint to trigger background video compilation.
+    """
+    # Add the task to FastAPI's background runner
+    vdo_file = process_video_compilation(request.video_paths, request.audio_path, request.output_path)
+    return FileResponse(
+        path=vdo_file,
+        media_type="video/mp4",
+        filename="output.mp4"
     )
