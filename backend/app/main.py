@@ -1,9 +1,13 @@
 from backend.app.schemas import VideoRequest
 from backend.worker.processors.editor import process_video_compilation
-from fastapi import FastAPI
+# pyrefly: ignore [missing-import]
+from fastapi import FastAPI, HTTPException
+# pyrefly: ignore [missing-import]      
 from fastapi.responses import FileResponse
-from backend.app.schemas import TTSRequest
+from backend.app.schemas import TTSRequest, Img2VdoRequest
 from backend.worker.processors import get_irodori_speech
+from backend.worker.processors.img2vdo import run_workflow as img2vdo_run_workflow
+
 
 # Initialize the FastAPI application instance
 app = FastAPI()
@@ -45,4 +49,19 @@ async def compile_video(request: VideoRequest):
         path=vdo_file,
         media_type="video/mp4",
         filename="output.mp4"
+    )
+
+@app.post("/img2vdo")
+async def create_img2vdo(request: Img2VdoRequest):
+    """
+    Endpoint to trigger image to video workflow.
+    """
+    vdo_file = img2vdo_run_workflow(request.image_path, request.prompt)
+    if not vdo_file:
+        raise HTTPException(status_code=500, detail="Failed to generate video")
+    
+    return FileResponse(
+        path=vdo_file,
+        media_type="video/mp4",
+        filename="generated_video.mp4"
     )

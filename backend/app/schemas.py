@@ -16,3 +16,7 @@ class VideoRequest(BaseModel):
     video_paths: list[str]
     audio_path: str
     output_path: str
+
+class Img2VdoRequest(BaseModel):
+    image_path: str
+    prompt: str
